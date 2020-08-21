@@ -41,11 +41,11 @@ class Task(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.label
 
-    def __init__(self, _id, label, done, username):
-        self.id=_id,
-        self.label=label,
-        self.done=done,
-        self.username=username
+    # def __init__(self, _id, label, done, username):
+    #     self.id=_id,
+    #     self.label=label,
+    #     self.done=done,
+    #     self.username=username
 
     def serialize(self):
         return {
@@ -56,22 +56,22 @@ class Task(db.Model):
             # do not serialize the password, its a security breach
         }
 
-    @classmethod
-    def get_task_by_username(cls, username):
-        task_results = cls.query.filter_by(username=username)
-        serialized_tasks = list(map(lambda x: x.serialize(), task_results))
-        return serialized_tasks
+    # @classmethod
+    # def get_task_by_username(cls, username):
+    #     task_results = cls.query.filter_by(username=username)
+    #     serialized_tasks = list(map(lambda x: x.serialize(), task_results))
+    #     return serialized_tasks
 
-    @classmethod
-    def get_task_by_id(cls, id):
-        task_results = cls.query.filter_by(id=id)
-        serialized_tasks = list(map(lambda x: x.serialize(), task_results))
-        return serialized_tasks
+    # @classmethod
+    # def get_task_by_id(cls, id):
+    #     task_results = cls.query.filter_by(id=id)
+    #     serialized_tasks = list(map(lambda x: x.serialize(), task_results))
+    #     return serialized_tasks
 
-    def save_to_data(self):
-        db.session.add(self)
-        db.session.commit()
+    # def save_to_data(self):
+    #     db.session.add(self)
+    #     db.session.commit()
 
-    def delete_from_database(self):
-        db.session.delete(self)
-        db.session.commit()
+    # def delete_from_database(self):
+    #     db.session.delete(self)
+    #     db.session.commit()

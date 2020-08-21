@@ -41,17 +41,22 @@ def handle_hello():
 
 @app.route('/todos/<username>', methods=['GET'])
 def get_todos(username):
-    tasks = Task.get_task_by_username(username)
+    task_results = Task.query.filter_by(username=username)
+    serialized_tasks = list(map(lambda x: x.serialize(), task_results))
     # return results, jsonify() on results, status
     return jsonify({
         "message":f"These are the tasks available for user {username}",
-        "task":tasks
+        "task":serialized_tasks
     }), 200
 
 
 @app.route('/todos/<username>', methods=['POST'])
 def create_todos(username):
-    pass
+    body = request.get_json()
+    user1 = Task(username=username, label=body["label"], done=body["done"])
+    db.session.add(user1)
+    db.session.commit()
+    return jsonify("ok")
 
 @app.route('/todos/<username>', methods=['PUT'])
 def update_todos(username):
