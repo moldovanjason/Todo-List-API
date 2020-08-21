@@ -59,8 +59,17 @@ def create_todos(username):
     return jsonify("ok")
 
 @app.route('/todos/<username>', methods=['PUT'])
-def update_todos(username):
-    pass
+def update_todos(username, id):
+    task = Task.query.get(id)
+    serialized_task = task.serialize()
+    done = serialized_task["done"]
+    serialized_task["done"] = not done
+
+
+    # serialized_task = Task(username=username, label=body["label"], done=body["done"])
+    # db.session.add(user1)
+    # db.session.commit()
+    return jsonify(serialized_task), 200
 
 @app.route('/todos/<username>', methods=['DELETE'])
 def delete_todos(username):
