@@ -56,11 +56,11 @@ class Task(db.Model):
             # do not serialize the password, its a security breach
         }
 
-    # @classmethod
-    # def get_task_by_username(cls, username):
-    #     task_results = cls.query.filter_by(username=username)
-    #     serialized_tasks = list(map(lambda x: x.serialize(), task_results))
-    #     return serialized_tasks
+    @classmethod
+    def get_task_by_username(cls, username):
+        task_results = cls.query.filter_by(username=username)
+        serialized_tasks = list(map(lambda x: x.serialize(), task_results))
+        return serialized_tasks
 
     # @classmethod
     # def get_task_by_id(cls, id):

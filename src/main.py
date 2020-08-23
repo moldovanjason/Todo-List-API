@@ -56,22 +56,20 @@ def create_todos(username):
     user1 = Task(username=username, label=body["label"], done=body["done"])
     db.session.add(user1)
     db.session.commit()
-    return jsonify("ok")
+    tasks = Task.get_task_by_username(username)
+    return jsonify({"Database":tasks})
 
-@app.route('/todos/<username>', methods=['PUT'])
+@app.route('/todos/<username>/<int:id>', methods=['PUT'])
 def update_todos(username, id):
     task = Task.query.get(id)
     serialized_task = task.serialize()
     done = serialized_task["done"]
     serialized_task["done"] = not done
 
-
-    # serialized_task = Task(username=username, label=body["label"], done=body["done"])
-    # db.session.add(user1)
-    # db.session.commit()
     return jsonify(serialized_task), 200
 
-@app.route('/todos/<username>', methods=['DELETE'])
+
+@app.route('/todos/<username>/<int:id>', methods=['DELETE'])
 def delete_todos(username):
     pass
 
@@ -82,3 +80,4 @@ if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=False)
 
+//
